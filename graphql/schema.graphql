@@ -1,0 +1,11 @@
+type person {
+  id: Int!
+  name: String!
+  age: Int!
+  gender: String!
+}
+type Query {
+  # person이라는 쿼리를 담아 보내면 String 형태로 반환해 줄 것이고 반드시 필요하다(!)라는 뜻
+  people: [person]!
+  person(id: Int!): person
+}
