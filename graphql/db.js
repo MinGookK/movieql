@@ -1,50 +1,13 @@
-let movies = [
-  {
-    id: 0,
-    name: 'Star Wars - The new one',
-    score: 1,
-  },
-  {
-    id: 1,
-    name: 'Avengers - The new one',
-    score: 10,
-  },
-  {
-    id: 2,
-    name: 'The Godfather',
-    score: 3,
-  },
-  {
-    id: 3,
-    name: 'Logan',
-    score: 8,
-  },
-];
+import axios from 'axios';
 
-export const getMovies = () => movies;
-
-export const getById = (id) => {
-  const filteredMovies = movies.filter((movie) => movie.id === id);
-  return filteredMovies[0];
-};
-
-export const deleteMovie = (id) => {
-  const cleanedMovies = movies.filter((movie) => movie.id !== id);
-  if (movies.length > cleanedMovies.length) {
-    movies = cleanedMovies;
-    return true;
-  } else {
-    return false;
+export const getMovies = (limit, rating) => {
+  let API_URL = 'https://yts.mx/api/v2/list_movies.json?';
+  if (limit > 0) {
+    API_URL += `limit=${limit}`;
   }
-};
-
-export const addMovie = (name, score) => {
-  const newMovie = {
-    id: movies.length,
-    name,
-    score,
-  };
-  movies.push(newMovie);
-
-  return newMovie;
+  if (rating > 0) {
+    API_URL += `&minimum_rating=${rating}`;
+  }
+  console.log(API_URL);
+  return axios.get(API_URL).then((res) => res.data.data.movies);
 };
